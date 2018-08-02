@@ -20,8 +20,7 @@ run again and again
 ```
 
 remove stack
-./stack_remove.sh
 
 ```
-
+./stack_remove.sh
 ```
