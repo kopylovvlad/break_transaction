@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres:9.6.2'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=db_production
+    volumes:
+      - '/Users/vladislavkopylov/db/test_psql5:/var/lib/postgresql/data'
+  web:
+    depends_on:
+      - 'postgres'
+    # build: .
+    image: 'transaction_test_web:latest'
+    environment:
+      - RAILS_ENV=production
+      - DATABASE_NAME=db_production
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=12345678
+      - RAILS_SERVE_STATIC_FILES=true
+    ports:
+      - '3000:3000'
+    entrypoint: /app/docker-entrypoint.sh postgres 5432
+volumes:
+  postgres:
